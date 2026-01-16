@@ -1,0 +1,106 @@
+.slideshow-container {
+    width: 80%;
+    max-width: 1000px; /* optional */
+    height: 400px; /* fixed height */
+    margin: auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* ensures cropped edges are hidden */
+    border: 4px solid grey;
+    border-radius: 10px;
+}
+
+    .slideshow-container img {
+        width: 100%;
+        height: 100%; /* fill the container */
+        object-fit: cover; /* crop if necessary */
+        display: block;
+        transition: opacity 0.5s ease-in-out;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        
+    }
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.dot-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.dot {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    margin: 0 4px;
+    background-color: #bbb;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .dot.active {
+        background-color: #717171;
+    }
+
+
+.popular-books {
+    display: flex; /* horizontal layout */
+    gap: 20px; /* space between cards */
+    overflow-x: auto; /* allow scrolling if too many cards */
+    padding: 20px;
+    scroll-behavior: smooth; /* smooth scrolling for overflow */
+    -webkit-justify-content: center;
+    justify-content: center;
+    background-color: #717171;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.book-card {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+    flex: 0 0 auto; /* prevent cards from shrinking */
+    width: 200px; /* fixed card width */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .book-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .book-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .book-card h3 {
+        font-size: 1.1rem;
+        margin: 10px 0;
+        padding: 0 10px;
+    }
