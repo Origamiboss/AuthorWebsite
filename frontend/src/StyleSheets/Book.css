@@ -1,0 +1,80 @@
+/* Book.css */
+
+.book-page {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    background-color: antiquewhite;
+    min-height: calc(100vh - 100px); /* adjust for header/footer if needed */
+}
+
+.book-card {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+}
+
+.book-cover {
+    width: 300px;
+    object-fit: cover;
+}
+
+.book-details {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.book-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.book-meta {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+    .book-meta span {
+        margin-right: 0.5rem;
+    }
+
+.book-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Responsive: stack image above details on small screens */
+@media (max-width: 768px) {
+    .book-card {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .book-cover {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .book-details {
+        padding: 1rem;
+    }
+
+    .book-title {
+        text-align: center;
+    }
+
+    .book-meta {
+        text-align: center;
+    }
+}
