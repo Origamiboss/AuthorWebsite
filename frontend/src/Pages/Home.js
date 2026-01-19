@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../StyleSheets/Home.css'; // your slideshow CSS
 
@@ -9,7 +10,7 @@ function Home() {
 
     // Fetch slides and books from backend
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/slides`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/events`)
             .then(res => setSlides(res.data))
             .catch(err => console.error(err));
 
@@ -61,10 +62,16 @@ function Home() {
             <center>
                 <div className="popular-books">
                     {books.map(book => (
-                        <div key={book.id} className="book-card">
-                            <img src={book.imageUrl} alt={book.title} />
-                            <h3>{book.title}</h3>
-                        </div>
+                        <Link
+                            key={book.id}
+                            to={`/books/${book.id}`}
+                            className="book-link"
+                        >
+                            <div className="book-home-card">
+                                <img src={book.coverImage} alt={book.title} />
+                                <h3>{book.title}</h3>
+                            </div>
+                        </Link>
                     ))}
                 </div>
             </center>
