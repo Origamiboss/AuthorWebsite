@@ -4,7 +4,7 @@ import axios from 'axios';
 import '../StyleSheets/Book.css';
 
 function Book() {
-    const { id } = useParams();      // book ID from URL
+    const { id } = useParams();
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -19,6 +19,25 @@ function Book() {
                 setLoading(false);
             });
     }, [id]);
+
+    const addToCart = () => {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Prevent duplicates
+        const alreadyInCart = cart.find(item => item.id === book.id);
+        if (alreadyInCart) return alert('Book already in cart');
+
+        cart.push({
+            id: book.id,
+            title: book.title,
+            price: book.cost,
+            coverImage: book.coverImage,
+            quantity: 1
+        });
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert('Added to cart!');
+    };
 
     if (loading) return <p>Loading book...</p>;
     if (!book) return <p>Book not found</p>;
@@ -36,13 +55,19 @@ function Book() {
                     <h1 className="book-title">{book.title}</h1>
 
                     <p className="book-meta">
-                        <span>{book.genre}</span> •{" "}
+                        <span>{book.genre}</span>
+                        <span> | </span>
                         <span>{book.publishedYear}</span>
                     </p>
+                    <p className="book-price">${book.cost.toFixed(2)}</p>
 
                     <p className="book-description">
                         {book.description}
                     </p>
+
+                    <button className="add-to-cart" onClick={addToCart}>
+                        Add to Cart
+                    </button>
                 </div>
             </div>
         </div>
