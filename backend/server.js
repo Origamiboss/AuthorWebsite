@@ -2,7 +2,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
+import paypalRoutes from './routes/paypal.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { pool } from './utils/db.js';
@@ -19,6 +19,9 @@ app.use(express.json());
 
 // Serve uploads folder
 app.use('/uploads', express.static(join(__dirname, 'uploads')));
+
+//Serve paypal route
+app.use('/api/paypal', paypalRoutes);
 
 // GET /api/books
 app.get('/api/books', async (req, res) => {

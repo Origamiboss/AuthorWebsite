@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../StyleSheets/Book.css';
@@ -7,12 +8,17 @@ function Book() {
     const { id } = useParams();
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    const [inCart, setInCart] = useState(false);
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/api/books/${id}`)
             .then(res => {
                 setBook(res.data);
                 setLoading(false);
+
+                // Check if book is already in cart
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const alreadyInCart = cart.find(item => item.id === res.data.id);
+                setInCart(!!alreadyInCart);
             })
             .catch(err => {
                 console.error(err);
@@ -25,7 +31,7 @@ function Book() {
 
         // Prevent duplicates
         const alreadyInCart = cart.find(item => item.id === book.id);
-        if (alreadyInCart) return alert('Book already in cart');
+        if (alreadyInCart) return;
 
         cart.push({
             id: book.id,
@@ -36,7 +42,7 @@ function Book() {
         });
 
         localStorage.setItem('cart', JSON.stringify(cart));
-        alert('Added to cart!');
+        setInCart(true);
     };
 
     if (loading) return <p>Loading book...</p>;
@@ -65,9 +71,18 @@ function Book() {
                         {book.description}
                     </p>
 
-                    <button className="add-to-cart" onClick={addToCart}>
-                        Add to Cart
+                    <button
+                        className="add-to-cart"
+                        onClick={addToCart}
+                        disabled={inCart} // disable if already in cart
+                    >
+                        {inCart ? 'In Cart' : 'Add to Cart'}
                     </button>
+                    {inCart && (
+                        <Link to="/cart" className="view-cart">
+                            View Cart
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>
