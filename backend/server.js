@@ -24,7 +24,7 @@ app.use('/uploads', express.static(join(__dirname, 'uploads')));
 app.get('/api/books', async (req, res) => {
     try {
         const [books] = await pool.query(
-            `SELECT id, title, description, cost, fileName
+            `SELECT id, title, description, fileName
              FROM books`
         );
 
@@ -54,7 +54,7 @@ app.get('/api/books/:id', async (req, res) => {
 
     try {
         const [rows] = await pool.query(
-            `SELECT id, title, description, cost, fileName
+            `SELECT id, title, genre, publishedYear, description, cost, fileName
              FROM books
              WHERE id = ?`,
             [bookId]

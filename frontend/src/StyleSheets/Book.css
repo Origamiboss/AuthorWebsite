@@ -5,7 +5,6 @@
     justify-content: center;
     padding: 2rem;
     background-color: antiquewhite;
-    min-height: calc(100vh - 100px); /* adjust for header/footer if needed */
 }
 
 .book-card {
@@ -39,7 +38,9 @@
 }
 
 .book-meta {
-    font-size: 0.9rem;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
     color: #777;
     margin-bottom: 1rem;
 }
@@ -53,7 +54,27 @@
     line-height: 1.6;
     color: #555;
 }
+.book-price {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #777;
+    margin-bottom: 1rem;
+}
+.add-to-cart {
+    margin-top: 15px;
+    padding: 10px 18px;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
+    .add-to-cart:hover {
+        background-color: #444;
+    }
 /* Responsive: stack image above details on small screens */
 @media (max-width: 768px) {
     .book-card {
