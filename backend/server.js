@@ -147,6 +147,38 @@ app.get('/api/events', async (req, res) => {
         res.status(500).json({ error: 'Database error' });
     }
 });
+// Get a single event by ID
+app.get('/api/events/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const [rows] = await pool.query(
+            `SELECT id, name, description, date, fileName
+             FROM events
+             WHERE id = ?`,
+            [id]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Event not found' });
+        }
+
+        const event = rows[0];
+        const baseUrl = `${req.protocol}://${req.get('host')}`;
+
+        const eventWithUrl = {
+            ...event,
+            imageUrl: event.fileName
+                ? `${baseUrl}/uploads/events/${event.fileName}`
+                : `${baseUrl}/uploads/events/default.png`
+        };
+
+        res.json(eventWithUrl);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
 
 
 // Root route
