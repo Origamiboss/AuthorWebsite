@@ -9,6 +9,7 @@ function Layout({ children }) {
                 <h1 className="banner">Author Page</h1>
                 <nav className="toolbar">
                     <Link to="/">Home</Link>
+                    <Link to="/store">Store</Link>
                     <Link to="/about">About</Link>
                     <Link to="/cart">Cart</Link>
                 </nav>

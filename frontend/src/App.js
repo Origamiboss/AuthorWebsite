@@ -6,6 +6,7 @@ import About from './Pages/About';
 import Book from './Pages/Book';
 import Cart from './Pages/Cart';
 import Checkout from './Pages/Checkout';
+import Store from './Pages/Store';
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/books/:id" element={<Book />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/store" element={<Store />} />
                 <Route path="*" element={<h2>Page Not Found</h2>} />
             </Routes>
         </Layout>
