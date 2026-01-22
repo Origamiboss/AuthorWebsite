@@ -61,7 +61,7 @@ function Home() {
             {/* Books section */}
             <center>
                 <div className="popular-books">
-                    {books.map(book => (
+                    {books.slice(0, 5).map(book => (
                         <Link
                             key={book.id}
                             to={`/books/${book.id}`}

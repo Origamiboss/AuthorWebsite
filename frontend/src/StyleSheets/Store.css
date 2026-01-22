@@ -8,12 +8,18 @@
         text-align: center;
         margin-bottom: 40px;
     }
+    .store-page h3 {
+        text-align: center;
+        color: #808080;
+    }
+    
 
 /* Grid layout */
 .store-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, 250px);
+    gap: 20px;
+    justify-content: center; /* keeps grid centered */
 }
 
 /* Product card */

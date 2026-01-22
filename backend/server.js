@@ -6,6 +6,8 @@ import paypalRoutes from './routes/paypal.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { pool } from './utils/db.js';
+import fs from 'fs';
+import path from 'path';
 
 const PORT = process.env.PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
@@ -27,25 +29,50 @@ app.use('/api/paypal', paypalRoutes);
 app.get('/api/books', async (req, res) => {
     try {
         const [books] = await pool.query(
-            `SELECT id, title, description, fileName
+            `SELECT id, title, genre, description, fileName
              FROM books`
         );
 
+        if (books.length === 0) {
+            return res.json([]); // empty list is OK
+        }
+
         const baseUrl = `${req.protocol}://${req.get('host')}`;
+        const uploadDir = path.join(__dirname, 'uploads', 'books');
 
-        const booksWithUrls = books.map(book => ({
-            ...book,
-            coverImage: book.fileName
-                ? `${baseUrl}/uploads/books/${book.fileName}`
-                : `${baseUrl}/uploads/books/default.png`
-        }));
+        const booksWithImages = await Promise.all(
+            books.map(async (book) => {
+                let coverImage = `${baseUrl}/uploads/books/default.jpg`;
 
-        res.json(booksWithUrls);
+                if (book.fileName) {
+                    const filePath = path.join(
+                        uploadDir,
+                        path.basename(book.fileName)
+                    );
+
+                    try {
+                        await fs.promises.access(filePath);
+                        coverImage = `${baseUrl}/uploads/books/${book.fileName}`;
+                    } catch {
+                        // file missing -> fallback
+                    }
+                }
+
+                return {
+                    ...book,
+                    coverImage
+                };
+            })
+        );
+
+        res.json(booksWithImages);
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Database error' });
     }
 });
+
 
 //Get a specific book by ID
 app.get('/api/books/:id', async (req, res) => {
@@ -67,14 +94,30 @@ app.get('/api/books/:id', async (req, res) => {
             return res.status(404).json({ error: 'Book not found' });
         }
 
-        const baseUrl = `${req.protocol}://${req.get('host')}`;
         const book = rows[0];
+        const baseUrl = `${req.protocol}://${req.get('host')}`;
 
-        book.coverImage = book.fileName
-            ? `${baseUrl}/uploads/books/${book.fileName}`
-            : `${baseUrl}/uploads/books/default.png`;
+        const uploadDir = path.join(__dirname, 'uploads', 'books');
+        const filePath = book.fileName
+            ? path.join(uploadDir, book.fileName)
+            : null;
 
-        res.json(book);
+        let coverImage = `${baseUrl}/uploads/books/default.jpg`;
+
+        if (filePath) {
+            try {
+                await fs.promises.access(filePath, fs.constants.F_OK);
+                coverImage = `${baseUrl}/uploads/books/${book.fileName}`;
+            } catch {
+                // file does not exist -> keep default
+            }
+        }
+
+        res.json({
+            ...book,
+            coverImage
+        });
+
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Database error' });
