@@ -85,7 +85,9 @@
     text-align: center;
     flex: 0 0 auto; /* prevent cards from shrinking */
     width: 200px; /* fixed card width */
+    height: 320px; /* fixed card height */
     transition: transform 0.2s, box-shadow 0.2s;
+
 }
 
     .book-home-card:hover {
@@ -104,3 +106,8 @@
         margin: 10px 0;
         padding: 0 10px;
     }
+.book-home-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}

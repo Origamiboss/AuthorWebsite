@@ -65,7 +65,7 @@ function Home() {
                         <Link
                             key={book.id}
                             to={`/books/${book.id}`}
-                            className="book-link"
+                            className="book-home-link"
                         >
                             <div className="book-home-card">
                                 <img src={book.coverImage} alt={book.title} />
