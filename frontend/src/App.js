@@ -7,6 +7,8 @@ import Book from './Pages/Book';
 import Cart from './Pages/Cart';
 import Checkout from './Pages/Checkout';
 import Store from './Pages/Store';
+import Calendar from './Pages/Calendar';
+import EventPage from './Pages/EventPage';
 
 function App() {
     return (
@@ -18,6 +20,8 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/store" element={<Store />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/events/:id" element={<EventPage />} />
                 <Route path="*" element={<h2>Page Not Found</h2>} />
             </Routes>
         </Layout>
