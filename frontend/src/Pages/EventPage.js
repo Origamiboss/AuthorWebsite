@@ -69,19 +69,9 @@ function EventPage() {
 
                     <p className="event-description">{event.description}</p>
 
-                    <button
-                        className="interested-button"
-                        onClick={markInterested}
-                        disabled={interested}
-                    >
-                        {interested ? "Marked Interested" : "Mark Interested"}
-                    </button>
+                    
 
-                    {interested && (
-                        <Link to="/interested" className="view-interested">
-                            View Interested Events
-                        </Link>
-                    )}
+                    
                 </div>
             </div>
         </div>
