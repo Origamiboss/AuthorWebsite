@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import '../StyleSheets/Store.css';
+import '../StyleSheets/Books.css';
 
-function Store() {
+function Books() {
     const [books, setBooks] = useState([]);
 
     useEffect(() => {
@@ -52,4 +52,4 @@ function Store() {
     );
 }
 
-export default Store;
+export default Books;

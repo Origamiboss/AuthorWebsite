@@ -1,15 +1,12 @@
 .slideshow-container {
-    width: 80%;
-    max-width: 1000px; /* optional */
-    height: 400px; /* fixed height */
-    margin: auto;
+    width: 100%;
+    height: 500px; /* fixed height */
+    margin: 0rem auto 4rem auto;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden; /* ensures cropped edges are hidden */
-    border: 4px solid grey;
-    border-radius: 10px;
 }
 
     .slideshow-container img {
@@ -18,8 +15,6 @@
         object-fit: cover; /* crop if necessary */
         display: block;
         transition: opacity 0.5s ease-in-out;
-        -moz-border-radius: 10px;
-        -webkit-border-radius: 10px;
         
     }
 
@@ -43,71 +38,73 @@
     right: 10px;
 }
 
-.dot-container {
+
+.reviews-section {
+    background-color: white;
+    margin: auto;
+}
+.review-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    margin-top: 15px;
+    padding: 1.5rem;
+    height: 260px; /* fixed height */
+
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 
-.dot {
-    display: inline-block;
-    height: 12px;
-    width: 12px;
-    margin: 0 4px;
-    background-color: #bbb;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-    .dot.active {
-        background-color: #717171;
+    /* Reviewer comment */
+    .review-card h4 {
+        margin: 0.5rem 0;
+        font-style: italic;
+        line-height: 1.3;
+        /* text scales automatically */
+        font-size: clamp(1.5rem, 2.5vw, 4rem);
+        max-height: 110px;
+        overflow: hidden;
     }
 
+    /* Reviewer name */
+    .review-card h5 {
+        margin: 0 0 1rem;
+        font-size: clamp(1.1rem, 2.5vw, 2rem);
+        color: #888;
+    }
 
-.popular-books {
-    display: flex; /* horizontal layout */
-    gap: 20px; /* space between cards */
-    overflow-x: auto; /* allow scrolling if too many cards */
-    padding: 20px;
-    scroll-behavior: smooth; /* smooth scrolling for overflow */
-    -webkit-justify-content: center;
-    justify-content: center;
-    background-color: #717171;
-    border-radius: 10px;
-    width: 80%;
-}
-
-.book-home-card {
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    /* Rating / text */
+    .review-card p {
+        margin: 0.25rem 0;
+        font-size: clamp(1.1rem, 2.5vw, 2rem);
+        color: #555;
+    }
+.home-newsletter {
+    margin: 4rem auto;
+    padding: 2.5rem 2rem;
+    background-color: white;
+    border-radius: 16px;
     text-align: center;
-    flex: 0 0 auto; /* prevent cards from shrinking */
-    width: 200px; /* fixed card width */
-    height: 320px; /* fixed card height */
-    transition: transform 0.2s, box-shadow 0.2s;
-
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
-    .book-home-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    .home-newsletter p {
+        font-size: clamp(1.1rem, 2vw, 1.3rem);
+        line-height: 1.6;
+        color: #444;
+        margin-bottom: 2rem;
     }
-
-    .book-home-card img {
-        width: 100%;
-        height: 250px;
-        object-fit: cover;
-    }
-
-    .book-home-card h3 {
+    .home-newsletter a {
+        display: inline-block;
+        padding: 0.9rem 1.6rem;
+        background-color: #0070ba;
+        color: #fff;
+        text-decoration: none;
         font-size: 1.1rem;
-        margin: 10px 0;
-        padding: 0 10px;
+        font-weight: 500;
+        border-radius: 999px; /* pill button */
+        box-shadow: 0 4px 12px rgba(0,112,186,0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-.book-home-link {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
