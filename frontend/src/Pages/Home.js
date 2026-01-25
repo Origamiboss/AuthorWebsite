@@ -4,77 +4,72 @@ import axios from 'axios';
 import '../StyleSheets/Home.css'; // your slideshow CSS
 
 function Home() {
-    const [slides, setSlides] = useState([]);
     const [books, setBooks] = useState([]);
+    const [reviews, setReviews] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // Fetch slides and books from backend
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/events`)
-            .then(res => setSlides(res.data))
-            .catch(err => console.error(err));
-
         axios.get(`${process.env.REACT_APP_API_URL}/api/books`)
             .then(res => setBooks(res.data))
+            .catch(err => console.error(err));
+        axios.get(`${process.env.REACT_APP_API_URL}/api/reviews`)
+            .then(res => setReviews(res.data))
             .catch(err => console.error(err));
     }, []);
 
     // Slideshow controls
     const nextSlide = () => {
-        setCurrentIndex((currentIndex + 1) % slides.length);
+        setCurrentIndex((currentIndex + 1) % books.length);
     };
 
     const prevSlide = () => {
-        setCurrentIndex((currentIndex - 1 + slides.length) % slides.length);
+        setCurrentIndex((currentIndex - 1 + books.length) % books.length);
     };
 
     const setSlide = (index) => {
         setCurrentIndex(index);
     };
 
+    const currentBook = books[currentIndex];
+    const filteredReviews = currentBook
+        ? reviews.filter(r => r.bookId === currentBook.id)
+        : [];
+
     return (
         <div>
             {/* Only render slideshow if slides exist */}
-            {slides.length > 0 && (
+            {books.length > 0 && (
                 <>
                     <div className="slideshow-container">
                         <img
-                            src={slides[currentIndex].imageUrl}
-                            alt={slides[currentIndex].title}
+                            src={books[currentIndex].coverImage}
+                            alt={books[currentIndex].title}
                         />
                         <span className="prev" onClick={prevSlide}>&#10094;</span>
                         <span className="next" onClick={nextSlide}>&#10095;</span>
                     </div>
 
-                    <div className="dot-container">
-                        {slides.map((slide, index) => (
-                            <span
-                                key={slide.id}
-                                className={`dot ${index === currentIndex ? 'active' : ''}`}
-                                onClick={() => setSlide(index)}
-                            ></span>
-                        ))}
-                    </div>
                 </>
             )}
 
-            {/* Books section */}
-            <center>
-                <div className="popular-books">
-                    {books.slice(0, 5).map(book => (
-                        <Link
-                            key={book.id}
-                            to={`/books/${book.id}`}
-                            className="book-home-link"
-                        >
-                            <div className="book-home-card">
-                                <img src={book.coverImage} alt={book.title} />
-                                <h3>{book.title}</h3>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </center>
+            <div className="reviews-section">
+                {filteredReviews.length > 0 ? (
+                    filteredReviews.map(review => (
+                        <div key={review.id} className="review-card">
+                            <h4>"{review.comment}"</h4>
+                            <h5>-{review.reviewerName}</h5>
+                            <p>{review.rating} / 10</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No reviews for this book yet.</p>
+                )}
+            </div>
+            <div className="home-newsletter">
+                <p>Join my newsletter and get all the latest updates on upcoming books and events right in your inbox!</p>
+                <Link to="/newsletter" className="newsletter-button">Subscribe Now</Link>
+            </div>
         </div>
     );
 }

@@ -6,7 +6,7 @@ import About from './Pages/About';
 import Book from './Pages/Book';
 import Cart from './Pages/Cart';
 import Checkout from './Pages/Checkout';
-import Store from './Pages/Store';
+import Books from './Pages/Books';
 import Calendar from './Pages/Calendar';
 import EventPage from './Pages/EventPage';
 
@@ -19,8 +19,8 @@ function App() {
                 <Route path="/books/:id" element={<Book />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
-                <Route path="/store" element={<Store />} />
-                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/books" element={<Books />} />
+                <Route path="/newsletter" element={<Calendar />} />
                 <Route path="/events/:id" element={<EventPage />} />
                 <Route path="*" element={<h2>Page Not Found</h2>} />
             </Routes>

@@ -6,12 +6,23 @@ function Layout({ children }) {
     return (
         <div className="layout">
             <header className="header">
-                <h1 className="banner">Author Page</h1>
+                <div className="banner">
+                    
+                    <h3>
+                        <span>Kimberly </span> 
+                        <span>Climer</span>
+                    </h3>
+                    
+                    <h3>Author</h3>
+                </div>
                 <nav className="toolbar">
                     <Link to="/">Home</Link>
-                    <Link to="/store">Store</Link>
-                    <Link to='/calendar'>Calendar</Link>
+                    <Link to="/books">Books</Link>
                     <Link to="/about">About</Link>
+                    <Link to='/newsletter'>Newsletter</Link>
+                    <Link>Bonus Content</Link>
+                    <Link>Book Club Kits</Link>
+                    <Link>Contact</Link>
                     <Link to="/cart">Cart</Link>
                 </nav>
             </header>
@@ -22,6 +33,8 @@ function Layout({ children }) {
 
             <footer>
                 <p>2026 My Website</p>
+                <h3>Kimberly Climer</h3>
+                <h4>Author</h4>
             </footer>
         </div>
     );

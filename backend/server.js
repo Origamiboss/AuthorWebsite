@@ -180,7 +180,19 @@ app.get('/api/events/:id', async (req, res) => {
     }
 });
 
-
+//Get Reviews by book id
+app.get('/api/reviews', async (req, res) => {
+    try {
+        const [reviews] = await pool.query(
+            `SELECT id, bookId, comment, rating, reviewerName
+                FROM reviews`
+        );
+        res.json(reviews);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Database error' });
+    }
+});
 // Root route
 app.get('/', (req, res) => {
     res.send('API Running');
