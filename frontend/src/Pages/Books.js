@@ -22,33 +22,51 @@ function Books() {
 
 
     return (
-        <div className="store-page">
-            <h1>Book Store</h1>
+        <section className="store">
+            <header className="store-header">
+                <h1>Books</h1>
+                <p>Discover stories by Kimberly Climer</p>
+            </header>
 
             <div className="store-grid">
-                {books.map(product => (
-                    <div className="store-card" key={product.id}>
-                        <img
-                            src={product.coverImage}
-                            alt={product.title}
-                            className="store-image"
-                        />
+                {books.map(book => (
+                    <article className="store-card" key={book.id}>
 
-                        <h2>{product.title}</h2>
-                        <h3>{product.genre}</h3>
-                        <p className="store-price">${product.cost?.toFixed(2) ?? '19.99'}</p>
+                        {/* Image */}
+                        <div className="store-image-wrapper">
+                            <img
+                                src={book.coverImage}
+                                alt={book.title}
+                                className="store-image"
+                                loading="lazy"
+                            />
+                        </div>
 
+                        {/* Content */}
+                        <div className="store-content">
+                            <h2 className="store-title">{book.title}</h2>
+                            <h3 className="store-genre">{book.genre}</h3>
+
+                            <p className="store-description">
+                                {book.description}
+                            </p>
+
+                            <p className="store-price">
+                                ${book.cost?.toFixed(2) ?? '19.99'}
+                            </p>
+                        </div>
+
+                        {/* Action */}
                         <Link
-                            key={product.id}
-                            to={`/books/${product.id}`}
+                            to={`/books/${book.id}`}
                             className="store-button"
                         >
                             View Details
                         </Link>
-                    </div>
+                    </article>
                 ))}
             </div>
-        </div>
+        </section>
     );
 }
 
