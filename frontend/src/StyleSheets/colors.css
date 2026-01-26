@@ -1,0 +1,18 @@
+:root {
+    --color-primary: #AF2BBF;
+    --color-primary-soft: #A14EBF;
+    --color-secondary: #6C91BF;
+    --color-secondary-soft: #5FB0B7;
+    --color-triary: #5BC8AF;
+    --color-bg: #ffffff;
+    --color-accent: #6C91BF;
+    --color-banner: #A14EBF;
+    --color-toolbar: #e0e7ff;
+    --color-toolbar-soft: #c7d2fe;
+    --color-success: #5BC8AF;
+    --color-header: #374151;
+    --color-text: #111827;
+    --color-muted: #6b7280;
+    --color-link: #6C91BF;
+    --color-link-hover: #5675A0;
+}
