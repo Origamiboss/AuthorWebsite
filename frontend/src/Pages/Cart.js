@@ -31,7 +31,7 @@ function Cart() {
 
     if (cart.length === 0) {
         return (
-            <div className="min-h-screen flex justify-center items-center bg-bg p-6">
+            <div className="flex justify-center items-center bg-bg p-6">
                 <h2 className="text-center text-xl md:text-2xl font-semibold text-text bg-white p-6 rounded-lg shadow-md max-w-md">
                     Your cart is empty
                 </h2>
