@@ -2,7 +2,7 @@
 .store-header {
     text-align: center;
     margin-bottom: 3rem;
-    background-color: white;
+    background-color: var(--color-secondary);
     height: 10rem;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@
 
     .store-header p {
         font-size: 1.2rem;
-        color: #555;
+        color: var(--color-text);
     }
 
 
@@ -37,7 +37,7 @@
 
 .store-grid {
     max-width: 1200px; /* limits width so cards don’t stretch too far */
-    margin: 0 auto; /* centers the grid horizontally */
+    margin: 2.5rem auto; /* centers the grid horizontally */
     display: flex;
     flex-direction: column;
     gap: 2.5rem; /* spacing between cards */
@@ -54,7 +54,7 @@
     min-height: 300px; /* ensures uniform height */
 
     padding: 2rem;
-    background: #ffffff;
+    background: var(--color-triary);
     border-radius: 16px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -88,19 +88,20 @@
 
 .store-title {
     font-size: 1.7rem;
+    color: var(--color-header);
     margin-bottom: 0.25rem;
 }
 
 .store-genre {
     font-size: 1.1rem;
-    color: #777;
+    color: var(--color-muted);
     margin-bottom: 0.5rem;
 }
 
 .store-description {
     font-size: 1.05rem;
     line-height: 1.5;
-    color: #555;
+    color: var(--color-text);
     margin-bottom: 0.75rem;
     /* keep height uniform */
     display: -webkit-box;
@@ -124,7 +125,7 @@
     align-self: flex-start;
     margin: auto;
     padding: 1.05rem 2.2rem;
-    background: linear-gradient(135deg, #0070ba, #005ea6);
+    background: var(--color-link);
     color: #fff;
     text-decoration: none;
     font-weight: 600;
@@ -137,6 +138,7 @@
     .store-button:hover {
         transform: translateY(-3px);
         box-shadow: 0 10px 22px rgba(0,112,186,0.45);
+        background: var(--color-link-hover)
     }
 
 

@@ -8,12 +8,17 @@ import { dirname, join } from 'path';
 import { pool } from './utils/db.js';
 import fs from 'fs';
 import path from 'path';
+import crypto from "crypto";
+import transporter from "./utils/mailer.js";
+
+
 
 const PORT = process.env.PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+
 
 // Middleware
 app.use(cors());
@@ -193,6 +198,74 @@ app.get('/api/reviews', async (req, res) => {
         res.status(500).json({ error: 'Database error' });
     }
 });
+
+
+//Newsletter subscription
+
+app.post("/api/newsletter", async (req, res) => {
+    const { email, name } = req.body;
+
+    if (!email || !name) {
+        return res.status(400).json({ error: "Missing fields" });
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+
+    try {
+        await pool.query(
+            `INSERT INTO newsletter (email, name, confirmed, confirmation_token)
+             VALUES (?, ?, false, ?)`,
+            [email, name, token]
+        );
+
+        const confirmUrl = `${process.env.CLIENT_URL}/confirm?token=${token}`;
+
+        await transporter.sendMail({
+            from: process.env.EMAIL_FROM,
+            to: email,
+            subject: "Confirm your subscription",
+            html: `
+                <h2>Welcome, ${name}!</h2>
+                <p>Please confirm your email to receive updates:</p>
+                <a href="${confirmUrl}"
+                   style="padding:12px 20px;background:#0070ba;color:white;border-radius:6px;text-decoration:none;">
+                    Confirm Subscription
+                </a>
+            `
+        });
+
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Subscription failed" });
+    }
+});
+
+//Confirmation route
+app.get("/api/newsletter/confirm", async (req, res) => {
+    const { token } = req.query;
+
+    if (!token) return res.status(400).send("Invalid token");
+
+    try {
+        const [result] = await pool.query(
+            `UPDATE newsletter
+             SET confirmed = true, confirmation_token = NULL
+             WHERE confirmation_token = ?`,
+            [token]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(400).send("Invalid or expired token");
+        }
+
+        res.redirect(`${process.env.CLIENT_URL}/confirmed`);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server error");
+    }
+});
+
 // Root route
 app.get('/', (req, res) => {
     res.send('API Running');

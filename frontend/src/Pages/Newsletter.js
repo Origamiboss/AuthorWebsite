@@ -1,11 +1,13 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "../StyleSheets/Calendar.css";
+import "../StyleSheets/Newsletter.css";
 
-export default function CalendarPage() {
+export default function NewsletterPage() {
     const [events, setEvents] = useState([]);
     const [currentDate, setCurrentDate] = useState(new Date());
+
+    
 
     // Fetch events once
     useEffect(() => {
@@ -55,6 +57,26 @@ export default function CalendarPage() {
         return eventsByDate[dateStr] || [];
     };
 
+
+    /* Newsletter Stuff */
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // stops page reload
+
+        try {
+            await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/newsletter`,
+                { email, name }
+            );
+
+            setEmail("");
+            setName("");
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong");
+        }
+    };
     return (
         <div className="calendar-page">
             <div className="calendar-container">
@@ -97,6 +119,27 @@ export default function CalendarPage() {
                             )}
                         </div>
                     ))}
+                </div>
+                <div className="newsletter-form">
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            placeholder="First Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+
+                        <button type="submit">Subscribe</button>
+                    </form>
                 </div>
             </div>
         </div>
