@@ -2,20 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import '../StyleSheets/Book.css';
 
 function Book() {
     const { id } = useParams();
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
     const [inCart, setInCart] = useState(false);
+
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}/api/books/${id}`)
             .then(res => {
                 setBook(res.data);
                 setLoading(false);
 
-                // Check if book is already in cart
                 const cart = JSON.parse(localStorage.getItem('cart')) || [];
                 const alreadyInCart = cart.find(item => item.id === res.data.id);
                 setInCart(!!alreadyInCart);
@@ -28,10 +27,7 @@ function Book() {
 
     const addToCart = () => {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        // Prevent duplicates
-        const alreadyInCart = cart.find(item => item.id === book.id);
-        if (alreadyInCart) return;
+        if (cart.find(item => item.id === book.id)) return;
 
         cart.push({
             id: book.id,
@@ -45,41 +41,42 @@ function Book() {
         setInCart(true);
     };
 
-    if (loading) return <p>Loading book...</p>;
-    if (!book) return <p>Book not found</p>;
+    if (loading) return <p className="text-center text-lg text-text">Loading book...</p>;
+    if (!book) return <p className="text-center text-lg text-text">Book not found</p>;
 
     return (
-        <div className="book-page">
-            <div className="book-card">
-                <img
-                    src={book.coverImage}
-                    alt={book.title}
-                    className="book-cover"
-                />
+        <div className="min-h-screen bg-bg flex justify-center p-6 md:p-10">
+            <div className="flex flex-col md:flex-row bg-triary rounded-xl shadow-md overflow-hidden max-w-3xl w-full">
+                {/* Book Cover */}
+                <div className="md:w-1/3 h-auto md:h-auto">
+                    <img
+                        src={book.coverImage}
+                        alt={book.title}
+                        className="w-full h-full object-cover"
+                    />
+                </div>
 
-                <div className="book-details">
-                    <h1 className="book-title">{book.title}</h1>
-
-                    <p className="book-meta">
-                        <span>{book.genre}</span>
-                        <span> | </span>
-                        <span>{book.publishedYear}</span>
-                    </p>
-                    <p className="book-price">${book.cost.toFixed(2)}</p>
-
-                    <p className="book-description">
-                        {book.description}
-                    </p>
+                {/* Book Details */}
+                <div className="flex-1 flex flex-col justify-between p-6 md:p-8">
+                    <h1 className="text-2xl md:text-3xl font-bold text-header">{book.title}</h1>
+                    <p className="text-muted mb-4">{book.genre} | {book.publishedYear}</p>
+                    <p className="text-text mb-4">{book.description}</p>
+                    <p className="text-header font-bold text-lg mb-4">${book.cost.toFixed(2)}</p>
 
                     <button
-                        className="add-to-cart"
                         onClick={addToCart}
-                        disabled={inCart} // disable if already in cart
+                        disabled={inCart}
+                        className={`px-4 py-2 rounded-md font-semibold text-white transition ${inCart ? "bg-muted cursor-not-allowed" : "bg-link hover:bg-link-hover"
+                            }`}
                     >
-                        {inCart ? 'In Cart' : 'Add to Cart'}
+                        {inCart ? "In Cart" : "Add to Cart"}
                     </button>
+
                     {inCart && (
-                        <Link to="/cart" className="view-cart">
+                        <Link
+                            to="/cart"
+                            className="inline-block mt-2 px-4 py-2 bg-link text-white rounded-md hover:bg-link-hover transition"
+                        >
                             View Cart
                         </Link>
                     )}

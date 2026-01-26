@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import '../StyleSheets/Cart.css';
 
 function Cart() {
     const [cart, setCart] = useState([]);
@@ -31,40 +30,74 @@ function Cart() {
     );
 
     if (cart.length === 0) {
-        return <h2 className="cart-empty">Your cart is empty</h2>;
+        return (
+            <div className="min-h-screen flex justify-center items-center bg-bg p-6">
+                <h2 className="text-center text-xl md:text-2xl font-semibold text-text bg-white p-6 rounded-lg shadow-md max-w-md">
+                    Your cart is empty
+                </h2>
+            </div>
+        );
     }
 
     return (
-        <div className="cart-page">
-            <h1>Your Cart</h1>
+        <div className="min-h-screen bg-bg p-6 md:p-10 flex justify-center">
+            <div className="w-full max-w-3xl bg-bg rounded-xl shadow-md p-6 md:p-8">
+                <h1 className="text-2xl md:text-3xl font-bold mb-6 text-header">Your Cart</h1>
 
-            {cart.map(item => (
-                <div key={item.id} className="cart-item">
-                    <img src={item.coverImage} alt={item.title} />
+                {cart.map(item => (
+                    <div
+                        key={item.id}
+                        className="flex flex-col md:flex-row gap-4 md:gap-6 items-center md:items-start border-b border-muted pb-4 mb-4"
+                    >
+                        <img
+                            src={item.coverImage}
+                            alt={item.title}
+                            className="w-24 h-32 object-cover rounded-lg"
+                        />
 
-                    <div className="cart-info">
-                        <h3>{item.title}</h3>
-                        <p>${item.price.toFixed(2)}</p>
+                        <div className="flex-1 flex flex-col gap-2 w-full">
+                            <h3 className="text-lg font-semibold text-header">{item.title}</h3>
+                            <p className="text-text font-medium">${item.price.toFixed(2)}</p>
 
-                        <div className="cart-quantity">
-                            <button onClick={() => updateQuantity(item.id, -1)}>-</button>
-                            <span>{item.quantity}</span>
-                            <button onClick={() => updateQuantity(item.id, 1)}>+</button>
+                            {/* Quantity controls */}
+                            <div className="flex items-center gap-2 mt-2">
+                                <button
+                                    onClick={() => updateQuantity(item.id, -1)}
+                                    className="px-3 py-1 bg-secondary text-white rounded-md hover:bg-secondary-soft transition"
+                                >
+                                    -
+                                </button>
+                                <span className="px-2">{item.quantity}</span>
+                                <button
+                                    onClick={() => updateQuantity(item.id, 1)}
+                                    className="px-3 py-1 bg-secondary text-white rounded-md hover:bg-secondary-soft transition"
+                                >
+                                    +
+                                </button>
+                            </div>
+
+                            <button
+                                onClick={() => removeItem(item.id)}
+                                className="mt-3 px-3 py-1 bg-primary text-white rounded-md hover:bg-primary-soft transition w-fit"
+                            >
+                                Remove
+                            </button>
                         </div>
-
-                        <button
-                            className="remove-btn"
-                            onClick={() => removeItem(item.id)}
-                        >
-                            Remove
-                        </button>
                     </div>
-                </div>
-            ))}
+                ))}
 
-            <div className="cart-total">
-                <h2>Total: ${totalPrice.toFixed(2)}</h2>
-                <a href="/checkout" className="checkout-btn">Checkout</a>
+                {/* Total and Checkout */}
+                <div className="flex flex-col md:flex-row justify-between items-center mt-6">
+                    <h2 className="text-xl font-semibold text-header mb-4 md:mb-0">
+                        Total: ${totalPrice.toFixed(2)}
+                    </h2>
+                    <a
+                        href="/checkout"
+                        className="px-6 py-3 bg-link text-white font-semibold rounded-full shadow-md hover:bg-link-hover transition"
+                    >
+                        Checkout
+                    </a>
+                </div>
             </div>
         </div>
     );
