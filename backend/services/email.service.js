@@ -1,19 +1,30 @@
 import nodemailer from 'nodemailer';
 
-const testAccount = await nodemailer.createTestAccount();
+let transporter;
 
-const transporter = nodemailer.createTransport({
-    host: testAccount.smtp.host,
-    port: testAccount.smtp.port,
-    secure: testAccount.smtp.secure,
-    auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-    },
-});
+// Initialize transporter once
+async function initTransporter() {
+    if (transporter) return transporter; // already initialized
+
+    const testAccount = await nodemailer.createTestAccount();
+
+    transporter = nodemailer.createTransport({
+        host: testAccount.smtp.host,
+        port: testAccount.smtp.port,
+        secure: testAccount.smtp.secure,
+        auth: {
+            user: testAccount.user,
+            pass: testAccount.pass,
+        },
+    });
+
+    return transporter;
+}
 
 export async function sendVerificationEmail(email, token) {
-    await transporter.sendMail({
+    const transporter = await initTransporter();
+
+    const info = await transporter.sendMail({
         from: '"Author Website" <no-reply@author.com>',
         to: email,
         subject: 'Confirm your email',
@@ -24,4 +35,6 @@ export async function sendVerificationEmail(email, token) {
       </a>
     `,
     });
+
+    console.log('Preview URL:', nodemailer.getTestMessageUrl(info)); // important for test emails!
 }
