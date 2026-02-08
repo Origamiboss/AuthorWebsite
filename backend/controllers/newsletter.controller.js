@@ -15,7 +15,9 @@ export async function subscribe(req, res) {
       VALUES (?, ?, false, ?, ?)
     `, [email, name, token, expires]);
 
+        console.log('Sending email to:', email, 'with token:', token);
         await sendVerificationEmail(email, token);
+
 
         res.json({ message: 'Check your email to confirm subscription' });
     } catch (err) {
