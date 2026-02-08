@@ -5,20 +5,20 @@ function Checkout() {
     const [cart, setCart] = useState([]);
     const [total, setTotal] = useState(0);
     const paypalRef = useRef(null);
-    const [paypalLoaded, setPaypalLoaded] = useState(false);
+    const buttonsRef = useRef(null);
+    const [sdkReady, setSdkReady] = useState(false);
 
     // Load cart
     useEffect(() => {
         const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
         setCart(storedCart);
-        const totalPrice = storedCart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        setTotal(totalPrice);
+        setTotal(storedCart.reduce((sum, item) => sum + item.price * item.quantity, 0));
     }, []);
 
     // Load PayPal SDK
     useEffect(() => {
-        if (document.getElementById('paypal-sdk')) {
-            setPaypalLoaded(true); // Already loaded
+        if (window.paypal) {
+            setSdkReady(true);
             return;
         }
 
@@ -26,25 +26,24 @@ function Checkout() {
         script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.REACT_APP_PAYPAL_CLIENT_ID}&currency=USD`;
         script.id = 'paypal-sdk';
         script.async = true;
-        script.onload = () => setPaypalLoaded(true);
+        script.onload = () => setSdkReady(true);
         document.body.appendChild(script);
+
+        return () => {
+            // Optional cleanup: do NOT remove the SDK in dev mode, prevents reloading issues
+        };
     }, []);
 
-    // Render PayPal buttons when SDK and cart are ready
+    // Initialize PayPal buttons once, safely
     useEffect(() => {
-        if (!paypalLoaded || !paypalRef.current || cart.length === 0) return;
+        if (!sdkReady || !window.paypal || !paypalRef.current) return;
+        if (buttonsRef.current) return; // Already initialized
 
-        // Clean any previous buttons
-        paypalRef.current.innerHTML = '';
+        // Only render buttons if cart has items
+        if (cart.length === 0) return;
 
-        window.paypal.Buttons({
-            style: {
-                layout: 'vertical',
-                color: 'blue',
-                shape: 'rect',
-                label: 'pay',
-                tagline: false,
-            },
+        buttonsRef.current = window.paypal.Buttons({
+            style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay', tagline: false },
             createOrder: async () => {
                 const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/paypal/create-order`, { cart });
                 return res.data.id;
@@ -56,9 +55,14 @@ function Checkout() {
                 setCart([]);
                 setTotal(0);
             },
-            onError: (err) => console.error('PayPal button error', err),
-        }).render(paypalRef.current);
-    }, [paypalLoaded, cart]);
+            onError: (err) => console.error('PayPal Buttons Error:', err),
+        });
+
+        buttonsRef.current.render(paypalRef.current);
+
+        // Only close buttons on unmount
+        return () => buttonsRef.current?.close();
+    }, [sdkReady, cart]);
 
     if (cart.length === 0) {
         return (
@@ -74,17 +78,11 @@ function Checkout() {
     return (
         <div className="min-h-screen flex justify-center items-start bg-bg p-6 md:p-10">
             <div className="w-full max-w-2xl bg-triary rounded-xl shadow-lg p-6 md:p-10 flex flex-col items-center">
-
-                <h1 className="text-3xl md:text-4xl font-bold mb-6 text-header text-center">
-                    Checkout
-                </h1>
-
-                <div className="text-2xl md:text-3xl font-semibold text-text mb-8">
-                    Total: ${total.toFixed(2)}
-                </div>
+                <h1 className="text-3xl md:text-4xl font-bold mb-6 text-header text-center">Checkout</h1>
+                <div className="text-2xl md:text-3xl font-semibold text-text mb-8">Total: ${total.toFixed(2)}</div>
 
                 <div className="w-full flex flex-col gap-4 mb-8">
-                    {cart.map(item => (
+                    {cart.map((item) => (
                         <div key={item.id} className="flex items-center justify-between bg-white rounded-lg p-4 shadow-md">
                             <div className="flex items-center gap-4">
                                 <img src={item.coverImage} alt={item.title} className="w-16 h-20 object-cover rounded-md" />
@@ -98,7 +96,7 @@ function Checkout() {
                 </div>
 
                 <div className="w-full flex justify-center">
-                    <div ref={paypalRef} className="w-full max-w-xs"></div>
+                    <div ref={paypalRef} className="w-full max-w-xs" />
                 </div>
             </div>
         </div>

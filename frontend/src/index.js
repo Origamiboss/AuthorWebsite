@@ -7,11 +7,9 @@ import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <BrowserRouter> {/* <-- WRAP HERE */}
-            <App />
-        </BrowserRouter>
-    </React.StrictMode>
+    <BrowserRouter> {/* <-- WRAP HERE */}
+        <App />
+    </BrowserRouter>
 );
 
 reportWebVitals();
