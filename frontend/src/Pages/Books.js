@@ -48,7 +48,7 @@ function Books() {
                             <h2 className="text-2xl font-semibold text-header mb-1">{book.title}</h2>
                             <h3 className="text-muted text-lg mb-2">{book.genre}</h3>
                             <p className="text-text text-base mb-3 line-clamp-4">{book.description}</p>
-                            <p className="font-semibold text-lg mb-4">${book.cost?.toFixed(2) ?? '19.99'}</p>
+                            <p className="font-semibold text-lg mb-4">${book.cost?.toFixed(2) ?? 'ERROR'}</p>
 
                             {/* Button */}
                             <Link

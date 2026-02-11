@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 export async function getAllBooks(req, res) {
     try {
         const [books] = await pool.query(`
-      SELECT id, title, genre, description, fileName
+      SELECT id, title, genre, description, fileName, cost
       FROM books
     `);
 
