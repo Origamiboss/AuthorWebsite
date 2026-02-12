@@ -8,6 +8,11 @@ export default function NewsletterPage() {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
 
+    //News letter states
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const [loading, setLoading] = useState(false);
+
     // Fetch events
     useEffect(() => {
         axios
@@ -50,13 +55,34 @@ export default function NewsletterPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
+        setSuccess("");
+        setLoading(true);
+
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/api/newsletter`, { email, name });
+            const res = await axios.post(
+                `${process.env.REACT_APP_API_URL}/api/newsletter`,
+                { email, name }
+            );
+
+            setSuccess("A comfirmation email has been sent to your inbox!");
             setEmail("");
             setName("");
         } catch (err) {
             console.error(err);
-            alert("Something went wrong");
+
+            if (err.response) {
+                // Server responded with a status code outside 2xx
+                setError(err.response.data.message || "Subscription failed.");
+            } else if (err.request) {
+                // No response received
+                setError("Server not responding. Try again later.");
+            } else {
+                // Something else happened
+                setError("An unexpected error occurred.");
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -115,6 +141,17 @@ export default function NewsletterPage() {
 
                 {/* Newsletter Form */}
                 <div className="mt-8 bg-bg rounded-2xl shadow-lg p-6 md:p-8 max-w-md mx-auto">
+                    {error && (
+                        <div className="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm">
+                            {error}
+                        </div>
+                    )}
+
+                    {success && (
+                        <div className="bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm">
+                            {success}
+                        </div>
+                    )}
                     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                         <input
                             type="text"
