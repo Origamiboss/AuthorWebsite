@@ -7,9 +7,9 @@ function Layout({ children }) {
         ["Books", "/books"],
         ["About", "/about"],
         ["Newsletter", "/newsletter"],
-        ["Bonus Content", "#"],
-        ["Book Club Kits", "#"],
-        ["Contact", "#"],
+        ["Bonus Content", "/bonus_content"],
+        ["Book Club Kits", "/book_club_kits"],
+        ["Contact", "/contact"],
         ["Cart", "/cart"],
     ];
 
