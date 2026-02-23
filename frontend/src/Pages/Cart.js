@@ -32,7 +32,7 @@ function Cart() {
     if (cart.length === 0) {
         return (
             <div className="flex justify-center items-center bg-bg p-6">
-                <h2 className="text-center text-xl md:text-2xl font-semibold text-text bg-white p-6 rounded-lg shadow-md max-w-md">
+                <h2 className="text-center text-xl md:text-2xl font-semibold text-text bg-sandstone p-6 rounded-lg shadow-md max-w-md">
                     Your cart is empty
                 </h2>
             </div>
@@ -41,13 +41,13 @@ function Cart() {
 
     return (
         <div className="min-h-screen bg-bg p-6 md:p-10 flex justify-center">
-            <div className="w-full max-w-3xl bg-bg rounded-xl shadow-md p-6 md:p-8">
+            <div className="w-full max-w-3xl bg-sandstone rounded-xl shadow-md p-6 md:p-8">
                 <h1 className="text-2xl md:text-3xl font-bold mb-6 text-header">Your Cart</h1>
 
                 {cart.map(item => (
                     <div
                         key={item.id}
-                        className="flex flex-col md:flex-row gap-4 md:gap-6 items-center md:items-start border-b border-muted pb-4 mb-4"
+                        className="flex flex-col md:flex-row gap-4 md:gap-6 items-center md:items-start border-b border-azur pb-4 mb-4"
                     >
                         <img
                             src={item.coverImage}
@@ -63,14 +63,14 @@ function Cart() {
                             <div className="flex items-center gap-2 mt-2">
                                 <button
                                     onClick={() => updateQuantity(item.id, -1)}
-                                    className="px-3 py-1 bg-secondary text-white rounded-md hover:bg-secondary-soft transition"
+                                    className="px-3 py-1 bg-link text-text rounded-md hover:bg-link-hover transition"
                                 >
                                     -
                                 </button>
                                 <span className="px-2">{item.quantity}</span>
                                 <button
                                     onClick={() => updateQuantity(item.id, 1)}
-                                    className="px-3 py-1 bg-secondary text-white rounded-md hover:bg-secondary-soft transition"
+                                    className="px-3 py-1 bg-link text-text rounded-md hover:bg-link-hover transition"
                                 >
                                     +
                                 </button>
@@ -78,7 +78,7 @@ function Cart() {
 
                             <button
                                 onClick={() => removeItem(item.id)}
-                                className="mt-3 px-3 py-1 bg-primary text-white rounded-md hover:bg-primary-soft transition w-fit"
+                                className="mt-3 px-3 py-1 bg-link text-text rounded-md hover:bg-link-hover transition w-fit"
                             >
                                 Remove
                             </button>

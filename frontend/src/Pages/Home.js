@@ -58,7 +58,7 @@ function Home() {
 
             {/* Slideshow */}
             {slides.length > 0 && (
-                <div className="relative w-full h-[700px] md:h-[800px] flex justify-center items-center overflow-hidden">
+                <div className="w-full h-[700px] md:h-[800px] flex justify-center items-center overflow-hidden">
                     <AnimatePresence mode="wait">
                         <Slide
                             key={currentSlide.id}
@@ -69,14 +69,14 @@ function Home() {
                     {/* Controls */}
                     <span
                         onClick={prev}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-secondary text-text p-3 rounded-full cursor-pointer hover:bg-secondary-soft"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 bg-slide-btn text-text p-3 rounded-full cursor-pointer hover:bg-slide-btn-hover"
                     >
                         &#10094;
                     </span>
 
                     <span
                         onClick={next}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-secondary text-text p-3 rounded-full cursor-pointer hover:bg-secondary-soft"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 bg-slide-btn text-text p-3 rounded-full cursor-pointer hover:bg-slide-btn-hover"
                     >
                         &#10095;
                     </span>
@@ -85,7 +85,7 @@ function Home() {
 
             {/* REVIEW SECTION (SYNCED TO CURRENT SLIDE) */}
             {currentReviews.length > 0 && (
-                <div className="bg-secondary mt-16 py-12 flex justify-center">
+                <div className="bg-candy mt-16 py-12 flex justify-center">
                     <AnimatePresence mode="wait">
                         {currentReviews.map(review => (
                             <ReviewSlide
@@ -99,7 +99,7 @@ function Home() {
 
 
             {/* Newsletter */}
-            <div className="my-16 mx-auto px-8 py-10 bg-triary rounded-2xl text-center shadow-lg max-w-3xl">
+            <div className="my-16 mx-auto px-8 py-10 bg-viridiam rounded-2xl text-center shadow-lg max-w-3xl">
                 <p className="text-text text-lg md:text-xl mb-8 leading-relaxed">
                     Join my newsletter and get all the latest updates on upcoming books and events right in your inbox!
                 </p>

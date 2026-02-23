@@ -6,15 +6,15 @@ function About() {
 
             {/* Author Name */}
             <div className="text-center my-10">
-                <h1 className="text-4xl font-bold text-header">Author Mckauthorton</h1>
+                <h1 className="text-4xl font-bold text-candy">Author Mckauthorton</h1>
             </div>
 
             {/* Author Information */}
-            <div className="flex flex-col items-center gap-3 max-w-xl mx-auto p-5 bg-triary rounded-xl shadow-md">
+            <div className="flex flex-col items-center gap-3 max-w-xl mx-auto p-5 bg-sandstone rounded-xl shadow-md">
                 <img
                     src="/Author.png"
                     alt="Author Mckauthorton"
-                    className="w-44 h-44 object-cover rounded-full border-4 border-primary"
+                    className="w-44 h-44 object-cover rounded-full border-4 border-azur"
                 />
                 <p className="text-center text-base text-text m-0">I was once a lad from Timberlan</p>
                 <p className="text-center text-base text-text m-0">Contact Information</p>

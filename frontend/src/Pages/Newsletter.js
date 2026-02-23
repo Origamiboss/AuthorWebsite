@@ -88,13 +88,13 @@ export default function NewsletterPage() {
 
     return (
         <div className="min-h-screen bg-bg flex justify-center items-start p-6 md:p-10">
-            <div className="w-full max-w-3xl bg-triary rounded-xl shadow-md p-6 md:p-8">
+            <div className="w-full max-w-3xl bg-sandstone rounded-xl shadow-md p-6 md:p-8">
 
                 {/* Calendar Header */}
                 <div className="flex justify-between items-center mb-6">
                     <button
                         onClick={goPrevMonth}
-                        className="bg-primary text-white px-3 py-2 rounded-md hover:bg-primary-soft transition-colors"
+                        className="bg-link text-white px-3 py-2 rounded-md hover:bg-link-hover transition-colors"
                     >
                         &lt;
                     </button>
@@ -103,7 +103,7 @@ export default function NewsletterPage() {
                     </h1>
                     <button
                         onClick={goNextMonth}
-                        className="bg-primary text-white px-3 py-2 rounded-md hover:bg-primary-soft transition-colors"
+                        className="bg-link text-white px-3 py-2 rounded-md hover:bg-link-hover transition-colors"
                     >
                         &gt;
                     </button>
@@ -140,7 +140,7 @@ export default function NewsletterPage() {
                 </div>
 
                 {/* Newsletter Form */}
-                <div className="mt-8 bg-bg rounded-2xl shadow-lg p-6 md:p-8 max-w-md mx-auto">
+                <div className="mt-8 bg-viridiam rounded-2xl shadow-lg p-6 md:p-8 max-w-md mx-auto">
                     {error && (
                         <div className="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm">
                             {error}
