@@ -8,7 +8,7 @@ function Layout({ children }) {
         ["About", "/about"],
         ["Newsletter", "/newsletter"],
         ["Bonus Content", "/bonus_content"],
-        ["Book Club Kits", "/book_club_kits"],
+        //["Book Club Kits", "/book_club_kits"],
         ["Contact", "/contact"],
         ["Cart", "/cart"],
     ];
@@ -20,12 +20,12 @@ function Layout({ children }) {
             <header className="flex flex-col">
 
                 {/* Banner */}
-                <div className="w-full h-80 bg-banner bg-cover bg-center flex flex-col justify-center">
-                    <h3 className="text-white text-4xl text-center drop-shadow-md">
+                <div className="w-full h-80 bg-viridiam bg-cover bg-center flex flex-col justify-center">
+                    <h3 className="text-sandstone text-6xl text-center drop-shadow-md">
                         <span>Kimberly </span>
                         <span>Climer</span>
                     </h3>
-                    <h3 className="text-white text-4xl text-center drop-shadow-md">
+                    <h3 className="text-purple text-5xl text-center drop-shadow-md">
                         Author
                     </h3>
                 </div>
@@ -36,7 +36,7 @@ function Layout({ children }) {
                         <Link
                             key={label}
                             to={path}
-                            className="relative mx-4 px-3 py-2 text-text text-lg font-bold rounded hover:bg-toolbar-soft"
+                            className="relative mx-4 px-3 py-2 text-purple text-lg font-bold rounded hover:bg-toolbar-hover"
                         >
                             {label}
                             {index < navLinks.length - 1 && (
@@ -53,7 +53,7 @@ function Layout({ children }) {
             </main>
 
             {/* Footer */}
-            <footer className="bg-primary text-white text-center border-t border-white/10 px-6 py-10">
+            <footer className="bg-heather text-white text-center border-t border-white/10 px-6 py-10">
                 <p className="text-base tracking-wider m-0">2026 My Website</p>
                 <h3 className="text-6xl font-semibold mt-2 mb-0">Kimberly Climer</h3>
                 <h4 className="text-2xl font-normal text-red-500 m-0">Author</h4>

@@ -46,7 +46,7 @@ function Book() {
 
     return (
         <div className="min-h-screen bg-bg flex justify-center p-6 md:p-10">
-            <div className="flex flex-col md:flex-row bg-triary rounded-xl shadow-md overflow-hidden max-w-3xl w-full">
+            <div className="flex flex-col md:flex-row bg-sandstone rounded-xl shadow-md overflow-hidden max-w-3xl w-full">
                 {/* Book Cover */}
                 <div className="md:w-1/3 h-auto md:h-auto">
                     <img
@@ -66,7 +66,7 @@ function Book() {
                     <button
                         onClick={addToCart}
                         disabled={inCart}
-                        className={`px-4 py-2 rounded-md font-semibold text-white transition ${inCart ? "bg-muted cursor-not-allowed" : "bg-link hover:bg-link-hover"
+                        className={`px-4 py-2 rounded-md font-semibold text-white transition ${inCart ? "bg-azur cursor-not-allowed" : "bg-link hover:bg-link-hover"
                             }`}
                     >
                         {inCart ? "In Cart" : "Add to Cart"}

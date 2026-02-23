@@ -21,7 +21,7 @@ function Books() {
         <section className="flex flex-col">
 
             {/* Header */}
-            <header className="bg-secondary h-40 flex flex-col justify-center items-center mb-12">
+            <header className="bg-heather h-40 flex flex-col justify-center items-center mb-12">
                 <h1 className="text-3xl md:text-4xl lg:text-[2.6rem] font-bold mb-2">Books</h1>
                 <p className="text-text text-lg md:text-xl">Discover stories by Kimberly Climer</p>
             </header>
@@ -31,7 +31,7 @@ function Books() {
                 {books.map(book => (
                     <article
                         key={book.id}
-                        className="flex flex-col md:flex-row gap-6 p-6 bg-triary rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-200 min-h-[300px]"
+                        className="flex flex-col md:flex-row gap-6 p-6 bg-sandstone rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-200 min-h-[300px]"
                     >
                         {/* Image - all same size */}
                         <div className="flex-shrink-0 w-40 h-60 md:w-[200px] md:h-[300px] overflow-hidden rounded-lg">

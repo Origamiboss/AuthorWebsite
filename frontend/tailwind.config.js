@@ -4,22 +4,23 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                primary: "#AF2BBF",
-                "primary-soft": "#A14EBF",
-                secondary: "#6C91BF",
-                "secondary-soft": "#5FB0B7",
-                triary: "#5BC8AF",
-                bg: "#ffffff",
-                accent: "#6C91BF",
-                banner: "#A14EBF",
-                toolbar: "#e0e7ff",
-                "toolbar-soft": "#c7d2fe",
-                success: "#5BC8AF",
-                header: "#374151",
-                text: "#111827",
-                muted: "#6b7280",
-                link: "#6C91BF",
-                "link-hover": "#5675A0",
+                heather: "#877499",
+                viridiam: "#679F9F",
+                sandstone: "#E6D4BF",
+                candy: "#E18299",
+                azur: "#2D4729",
+                purple: "#6A0DAD",
+
+
+
+                bg: "#F5F5F5",
+                text: "#333333",
+                toolbar: "#FFFFFF",
+                "toolbar-hover": "#D9B38280",
+                "slide-btn": "#877499", 
+                "slide-btn-hover": "#6A0DAD80",
+                link: "#4F7F7F",
+                "link-hover": "#3E6666"
             },
         },
     },
