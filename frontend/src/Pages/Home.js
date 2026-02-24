@@ -58,7 +58,7 @@ function Home() {
 
             {/* Slideshow */}
             {slides.length > 0 && (
-                <div className="w-full h-[700px] md:h-[800px] flex justify-center items-center overflow-hidden">
+                <div className="w-full h-[1000px] md:h-[800px] flex justify-center items-center overflow-hidden">
                     <AnimatePresence mode="wait">
                         <Slide
                             key={currentSlide.id}
