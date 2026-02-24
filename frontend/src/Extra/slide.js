@@ -17,7 +17,7 @@ function Slide({ slide }) {
                 backgroundPosition: "center",
             }}
         >
-            <div className="p-6 rounded-lg max-w-3xl text-center">
+            <div className="p-6 rounded-lg text-center">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">{slide.title}</h2>
                 <p className="text-lg md:text-xl">{slide.description}</p>
             </div>
