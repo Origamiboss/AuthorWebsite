@@ -24,7 +24,7 @@ function Contact() {
         setStatus(null);
 
         try {
-            await axios.post("/api/contact", formData);
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/contact`, formData);
             setStatus("success");
             setFormData({ name: "", email: "", message: "" });
         } catch (err) {
@@ -39,7 +39,7 @@ function Contact() {
             <div className="w-full max-w-2xl bg-white shadow-lg rounded-2xl p-8">
                 <h1 className="text-4xl font-bold mb-4 text-center">Contact Us</h1>
                 <p className="text-center text-gray-600 mb-6">
-                    Have questions? Send us a message and we’ll get back to you.
+                    Have questions? Send us a message and we'll get back to you.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">

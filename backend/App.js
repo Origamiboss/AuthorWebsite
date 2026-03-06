@@ -12,6 +12,7 @@ import newsletterRoutes from './routes/newsletter.routes.js';
 //import authRoutes from './routes/auth.routes.js';
 import slideRoutes from './routes/slides.routes.js';
 import paypalRoutes from './routes/paypal.routes.js';
+import contactRoutes from './routes/contact.routes.js';
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use('/api/books', bookRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/newsletter', newsletterRoutes);
+app.use('/api/contact', contactRoutes);
 //app.use('/api/auth', authRoutes);
 app.use('/api/slides', slideRoutes);
 app.use('/api/paypal', paypalRoutes);

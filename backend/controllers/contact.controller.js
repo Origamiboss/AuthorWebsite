@@ -3,11 +3,15 @@ import nodemailer from "nodemailer";
 /*
     Email transporter
 */
+const testAccount = await nodemailer.createTestAccount();
+
 const transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: testAccount.smtp.host,
+    port: testAccount.smtp.port,
+    secure: testAccount.smtp.secure,
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: testAccount.user,
+        pass: testAccount.pass,
     },
 });
 
@@ -16,6 +20,7 @@ const transporter = nodemailer.createTransport({
     Send Contact Message
 */
 export const sendContactMessage = async (req, res) => {
+    console.log("Received contact message:", req.body);
     try {
         const { name, email, message } = req.body;
 
@@ -29,8 +34,8 @@ export const sendContactMessage = async (req, res) => {
 
         // Email options
         const mailOptions = {
-            from: `"Contact Form" <${process.env.EMAIL_USER}>`,
-            to: process.env.EMAIL_USER,
+            from: `"Contact Form" <${process.env.USER_EMAIL}>`,
+            to: process.env.USER_EMAIL,
             replyTo: email,
             subject: `New Contact Message from ${name}`,
             text: `
@@ -43,7 +48,7 @@ export const sendContactMessage = async (req, res) => {
         };
 
         await transporter.sendMail(mailOptions);
-
+        console.log("Contact message sent:", nodemailer.getTestMessageUrl(mailOptions));
         return res.json({
             success: true,
             message: "Message sent successfully",
