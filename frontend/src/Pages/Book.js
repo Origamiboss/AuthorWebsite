@@ -45,10 +45,10 @@ function Book() {
     if (!book) return <p className="text-center text-lg text-text">Book not found</p>;
 
     return (
-        <div className="min-h-screen bg-bg flex justify-center p-6 md:p-10">
+        <div className="min-h-[1000px] bg-bg flex justify-center p-6 md:p-10">
             <div className="flex flex-col md:flex-row bg-sandstone rounded-xl shadow-md overflow-hidden max-w-3xl w-full">
                 {/* Book Cover */}
-                <div className="md:w-1/3 h-auto md:h-auto">
+                <div className="md:w-1/2 h-auto md:h-auto">
                     <img
                         src={book.coverImage}
                         alt={book.title}
