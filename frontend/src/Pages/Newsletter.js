@@ -89,9 +89,9 @@ export default function NewsletterPage() {
     return (
         <div className="min-h-screen bg-bg flex justify-center items-start p-6 md:p-10">
             <div className="w-full max-w-3xl bg-sandstone rounded-xl shadow-md p-6 md:p-8">
-
+                <h3 className="text-center font-bold text-header mb-2">Join my newsletter and get all the latest updates on upcoming books and events right in your inbox!</h3>
                 {/* Calendar Header */}
-                <div className="flex justify-between items-center mb-6">
+                {/*<div className="flex justify-between items-center mb-6">
                     <button
                         onClick={goPrevMonth}
                         className="bg-link text-white px-3 py-2 rounded-md hover:bg-link-hover transition-colors"
@@ -109,14 +109,14 @@ export default function NewsletterPage() {
                     </button>
                 </div>
 
-                {/* Weekdays */}
+                {/* Weekdays /}
                 <div className="grid grid-cols-7 text-center font-bold text-header mb-2">
                     {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
                         <div key={day}>{day}</div>
                     ))}
                 </div>
 
-                {/* Calendar Grid */}
+                {/* Calendar Grid /}
                 <div className="grid grid-cols-7 gap-2">
                     {days.map((day, index) => (
                         <div
@@ -138,6 +138,7 @@ export default function NewsletterPage() {
                         </div>
                     ))}
                 </div>
+                */}
 
                 {/* Newsletter Form */}
                 <div className="mt-8 bg-viridiam rounded-2xl shadow-lg p-6 md:p-8 max-w-md mx-auto">
