@@ -7,7 +7,7 @@ function Checkout() {
     const paypalRef = useRef(null);
     const buttonsRef = useRef(null);
     const [sdkReady, setSdkReady] = useState(false);
-
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
     // Load cart
     useEffect(() => {
         const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -49,11 +49,31 @@ function Checkout() {
                 return res.data.id;
             },
             onApprove: async (data) => {
-                await axios.post(`${process.env.REACT_APP_API_URL}/api/paypal/capture-order`, { orderID: data.orderID });
-                alert('Payment completed!');
-                localStorage.removeItem('cart');
-                setCart([]);
-                setTotal(0);
+                try {
+                    const res = await axios.post(
+                        `${process.env.REACT_APP_API_URL}/api/paypal/capture-order`,
+                        {
+                            orderID: data.orderID,
+                            cart: cart
+                        }
+                    );
+
+                    // Check if backend confirms payment success
+                    if (res.data.success) {
+                        alert("Payment successful!");
+
+                        localStorage.removeItem("cart");
+                        setCart([]);
+                        setTotal(0);
+                        setPaymentSuccess(true);
+                    } else {
+                        alert("Payment failed or not completed.");
+                    }
+
+                } catch (err) {
+                    console.error(err);
+                    alert("There was a problem processing your payment.");
+                }
             },
             onError: (err) => console.error('PayPal Buttons Error:', err),
         });
@@ -68,8 +88,19 @@ function Checkout() {
         return (
             <div className="min-h-screen flex justify-center items-center bg-bg p-6">
                 <div className="bg-sandstone text-text p-8 rounded-xl shadow-lg text-center max-w-md">
-                    <h1 className="text-2xl font-bold mb-4 text-heather">Your cart is empty</h1>
-                    <p>Add some items before checking out.</p>
+                    {paymentSuccess && (
+                        <div>
+                            <h1 className="text-2xl font-bold mb-4 text-heather">Payment Completed Successfully</h1>
+                            <p>Feel free to checkout the rest of the website.</p>
+                        </div>
+                    )}
+                    {!paymentSuccess && (
+                        <div>
+                            <h1 className="text-2xl font-bold mb-4 text-heather">Your cart is empty</h1>
+                            <p>Add some items before checking out.</p>
+                        </div>
+                    )}
+                    
                 </div>
             </div>
         );
@@ -93,6 +124,7 @@ function Checkout() {
                             </div>
                         </div>
                     ))}
+                    <div className="text-right font-bold text-text text-lg">Total: ${total.toFixed(2)}</div>
                 </div>
 
                 <div className="w-full flex justify-center">
