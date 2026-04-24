@@ -1,5 +1,6 @@
 // routes/paypal.js
 import express from 'express';
+import { pool } from '../utils/db.js';
 import { checkoutNodeJssdk, paypalClient } from '../utils/paypal.js'; // <- match the export
 
 const router = express.Router();
@@ -45,16 +46,51 @@ router.post('/create-order', async (req, res) => {
 // Capture order
 router.post('/capture-order', async (req, res) => {
     try {
-        const { orderID } = req.body;
-        console.log('Capture order request body:', req.body);
+        const { orderID, cart } = req.body;
+
         const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderID);
         request.requestBody({});
 
         const capture = await paypalClient.execute(request);
-        res.json(capture.result);
+        const result = capture.result;
+
+        if (result.status === "COMPLETED") {
+
+            const payerEmail = result.payer.email_address;
+            const transactionID =
+                result.purchase_units[0].payments.captures[0].id;
+
+            const total = cart.reduce(
+                (sum, item) => sum + item.price * item.quantity,
+                0
+            );
+
+            await pool.query(
+                `INSERT INTO orders 
+                (order_id, transaction_id, email, items, total, status, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, NOW())`,
+                [
+                    result.id,
+                    transactionID,
+                    payerEmail,
+                    JSON.stringify(cart),
+                    total,
+                    result.status
+                ]
+            );
+        }
+
+        res.json({
+            success: result.status === "COMPLETED",
+            status: result.status
+        });
+
     } catch (err) {
         console.error('Capture error:', err);
-        res.status(500).json({ error: 'PayPal order capture failed' });
+        res.status(500).json({
+            success: false,
+            error: 'PayPal order capture failed'
+        });
     }
 });
 
