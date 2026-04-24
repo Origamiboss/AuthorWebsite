@@ -86,7 +86,7 @@ function Checkout() {
 
     if (cart.length === 0) {
         return (
-            <div className="min-h-screen flex justify-center items-center bg-bg p-6">
+            <div className="flex justify-center items-center bg-bg p-6">
                 <div className="bg-sandstone text-text p-8 rounded-xl shadow-lg text-center max-w-md">
                     {paymentSuccess && (
                         <div>
@@ -107,7 +107,7 @@ function Checkout() {
     }
 
     return (
-        <div className="min-h-screen flex justify-center items-start bg-bg p-6 md:p-10">
+        <div className="flex justify-center items-start bg-bg p-6 md:p-10">
             <div className="w-full max-w-2xl bg-sandstone rounded-xl shadow-lg p-6 md:p-10 flex flex-col items-center">
                 <h1 className="text-3xl md:text-4xl font-bold mb-6 text-heather text-center">Checkout</h1>
                 <div className="text-2xl md:text-3xl font-semibold text-text mb-8">Total: ${total.toFixed(2)}</div>

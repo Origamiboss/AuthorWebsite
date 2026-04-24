@@ -23,10 +23,10 @@ function Home() {
 
     const combinedItems = React.useMemo(() => {
         const result = [];
-        const currentBookId = slides.length > 0 ? slides[0].bookId : null;
+        const currentBookId = slides.length > 0 ? slides[0].Id : null;
         if (!currentBookId) return result;
 
-        const filteredSlides = slides.filter(slide => slide.bookId === currentBookId);
+        const filteredSlides = slides.filter(slide => slide.Id === currentBookId);
         const filteredReviews = reviews.filter(review => review.bookId === currentBookId);
 
         const maxLength = Math.max(filteredSlides.length, filteredReviews.length);
